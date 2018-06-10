@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dependencies>
+   <includePath signature="/IG:\uCOSII\UCOSII之我的模板\CMSIS /IG:\uCOSII\UCOSII之我的模板\CMSIS\CM3\DeviceSupport /IG:\uCOSII\UCOSII之我的模板\UCOSII\UCOSII-CORE /IG:\uCOSII\UCOSII之我的模板\CMSIS\CM3\DeviceSupport\ST\STM32F10x /IG:\uCOSII /IG:\uCOSII\UCOSII之我的模板\Project /IG:\uCOSII\UCOSII之我的模板 /IG:\uCOSII\UCOSII之我的模板\Libraries /IG:\uCOSII\UCOSII之我的模板\UCOSII\UCOSII-PORT /IG:\uCOSII\UCOSII之我的模板\USER /IG:\uCOSII\UCOSII之我的模板\CMSIS\CM3 /IG:\uCOSII\UCOSII之我的模板\UCOSII\UCOSII-CONFIG /IG:\uCOSII\UCOSII之我的模板\UCOSII /IG:\uCOSII\UCOSII之我的模板\CMSIS\CM3\CoreSupport /IG:\uCOSII\UCOSII之我的模板\Libraries\inc /IG:\uCOSII\UCOSII之我的模板\CMSIS\CM3\DeviceSupport\ST">
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_sdio.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_mutex.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\misc.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\misc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_dma.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_dma.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_spi.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_spi.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_tmr.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_rcc.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h" lastModified="147edff8615">
+         <include file="..\..\..\..\CMSIS\CM3\CoreSupport\core_cm3.h"/>
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h"/>
+         <include file="..\..\..\..\USER\stm32f10x_conf.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_wwdg.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_wwdg.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_core.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\USER\stm32f10x_conf.h" lastModified="147d8a860c8">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_adc.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_dma.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_exti.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_gpio.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_spi.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_tim.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_usart.h"/>
+         <include file="..\..\..\..\Libraries\inc\misc.h"/>
+      </source>
+      <source file="..\..\..\..\USER\stm32f10x_it.h" lastModified="1399f9571d8">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_wwdg.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\USER\os_cfg.h" lastModified="1399f621180">
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_sem.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\USER\stm32f10x_it.c" lastModified="147e712107f">
+         <include file="..\..\..\..\USER\stm32f10x_it.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_crc.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_adc.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CONFIG\includes.h" lastModified="147ee244811">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+         <include file="..\..\..\..\USER\task.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-PORT\os_cpu.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-CONFIG\os_cfg.h"/>
+         <include file="..\..\..\..\USER\bsp.h"/>
+         <include file="..\..\..\..\USER\dht11.h"/>
+         <include file="..\..\..\..\USER\delay.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_task.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_crc.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_crc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_adc.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_adc.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_mem.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\USER\relay.h" lastModified="147b894ee6c">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\CMSIS\CM3\CoreSupport\core_cm3.h" lastModified="12e0937d790">
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-PORT\os_dbg_r.c" lastModified="128fba8c7b0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\USER\relay.c" lastModified="147b8a1d388">
+         <include file="..\..\..\..\USER\relay.h"/>
+      </source>
+      <source file="..\..\..\..\USER\task.h" lastModified="147ee252392">
+         <include file="..\..\..\..\UCOSII\UCOSII-CONFIG\includes.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_i2c.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\CMSIS\CM3\CoreSupport\core_cm3.c" lastModified="14737d39558">
+      </source>
+      <source file="..\..\..\..\USER\task.c" lastModified="147ecfe651e">
+         <include file="..\..\..\..\USER\task.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_pwr.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_can.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_rtc.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_q.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_tim.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_exti.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_exti.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_i2c.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_i2c.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_mbox.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_pwr.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_pwr.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_can.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_can.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_rtc.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rtc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_exti.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_tim.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_tim.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-PORT\os_dbg.c" lastModified="11a36a99970">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-PORT\os_cpu_c.c" lastModified="1399f621180">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_dbgmcu.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_dbgmcu.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_dac.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_fsmc.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_fsmc.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_fsmc.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-PORT\os_cpu.h" lastModified="1399f9e3fc0">
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_dac.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_dac.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_flag.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h" lastModified="1399f5933f8">
+         <include file="..\..\..\..\USER\os_cfg.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-PORT\os_cpu.h"/>
+      </source>
+      <source file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h" lastModified="12e9dacf810">
+      </source>
+      <source file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.c" lastModified="12e9dad0f80">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\USER\bsp.h" lastModified="147ee250768">
+         <include file="..\..\..\..\UCOSII\UCOSII-CONFIG\includes.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_flash.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\USER\bsp.c" lastModified="147e7f5b36c">
+         <include file="..\..\..\..\USER\bsp.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_usart.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_bkp.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CORE\os_time.c" lastModified="11ac2de4cb0">
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_gpio.c" lastModified="12ea44cb570">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_gpio.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_flash.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_flash.h"/>
+      </source>
+      <source file="..\..\..\..\UCOSII\UCOSII-CONFIG\os_cfg.h" lastModified="1399f621180">
+      </source>
+      <source file="..\..\..\..\USER\dht11.h" lastModified="147e84c759a">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+         <include file="..\..\..\..\USER\delay.h"/>
+         <include file="..\..\..\..\USER\relay.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_gpio.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_cec.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_usart.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_usart.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\misc.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_dbgmcu.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\USER\dht11.c" lastModified="147e68087fe">
+         <include file="..\..\..\..\USER\dht11.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-CORE\ucos_ii.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_bkp.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_bkp.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\USER\delay.h" lastModified="147d9a37b5f">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\USER\delay.c" lastModified="147d9a315ad">
+         <include file="..\..\..\..\USER\delay.h"/>
+         <include file="..\..\..\..\UCOSII\UCOSII-CONFIG\includes.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_iwdg.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_iwdg.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_cec.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_cec.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_dma.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_spi.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\USER\main.c" lastModified="147ee24bc5c">
+         <include file="..\..\..\..\UCOSII\UCOSII-CONFIG\includes.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\src\stm32f10x_sdio.c" lastModified="12e9da93720">
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_sdio.h"/>
+         <include file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_iwdg.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\..\Libraries\inc\stm32f10x_rcc.h" lastModified="12e9da93720">
+         <include file="..\..\..\..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h"/>
+      </source>
+   </includePath>
+</dependencies>

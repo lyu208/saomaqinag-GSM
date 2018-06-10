@@ -1,0 +1,759 @@
+
+/**
+  ******************************************************************************
+  * @file    user.c
+  * @author  侯霄
+  * @date    2016年5月5日
+  * @brief   系统功能实现在此文件内
+  ******************************************************************************
+  * @attention
+  *    注意事项:
+  *
+  *
+  *
+  *                COPYRIGHT 2016 冲霄集团物联网设备研发中心
+  ******************************************************************************
+  */
+
+#include "user.h"
+
+#include "delay.h"
+#include "tools.h"
+#include "peripheral.h"
+#include "lcd.h"
+#include "qr_encode.h"
+#include "HX711.h"
+#include "sim900a.h"
+
+#define QRCODE_Y    240      //TFT二维码显示坐标y
+
+
+float  verison = 0;
+
+uint16_t DS0_TimeCnt = 0;
+
+uchar keyPadRowScan = 0;
+uint16_t keyPadCnt = 0;
+uchar keyTouch = 0;
+uchar getWeightService = 0;
+uchar getWeightCnt = 0;
+char weightStr[10] = {0};
+char unitPrice[8] = {0};
+char totalMoney[8] = {0};
+char gprsSendBuff[50] = {0};
+uchar tradeLock = 0;
+uchar  ledFlickFlag = 0;
+uchar gprsService = 0;
+uint16_t heartbeat = 0;
+uchar cunnectFlag = 0;
+uchar heartbeatService = 0;
+
+const uint8_t codetest[] = //微信名片，可以去百度上搜索二维码名片 查看
+{
+    "URL:http:www.baidu.com"
+//    "独睡无适处，静夜起相思。\r\n凭栏相望远，念我美娇妻。\r\n "
+//    "何当拥卿巫山雨云共佳期，却话待我有房手里存款几个亿！\r\n"
+//    "                    ——侯霄"
+//  "不要扫我"
+};
+
+void RCC_Config(void);
+void DISPLAY_RENCODE_TO_TFT(uint8_t *qrcode_data);
+/************************************************
+*函数名 :       RCC_Config
+
+*函数参数 :      无
+
+*函数返回值 :     无
+
+*函数功能描述 :   需要的各个时钟 统一在这里开启即可
+
+*注意 :
+*************************************************/
+void RCC_Config(void)
+{
+    /*      【APB2时钟 最大72M】 */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,
+                           ENABLE); /* 任何一个端口，当有发生了重映射 要开启此时钟
+                           GPIO用作外部中断EXTI的时候，必须开启AFIO时钟！*/
+
+
+    /*                                                         */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); /*  */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); /* 串口3 PB10 PB11*/
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE); /*  */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE); /*  */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);
+    //  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOF, ENABLE);
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOG, ENABLE);  */
+    /*                                                         */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);   */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);   */
+    /*                                                         */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);   */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE); /* 串口1 485通信*/
+    /*                                                         */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);   */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM8, ENABLE);   */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM9, ENABLE);   */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM10, ENABLE);  */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM11, ENABLE);  */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM15, ENABLE);  */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM16, ENABLE);  */
+    /*  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM17, ENABLE);  */
+
+
+    /*      【APB1时钟 最大36M】 */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);   */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); /* 通用定时器4 时间基准*/
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM12, ENABLE);  */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM13, ENABLE);  */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM14, ENABLE);  */
+    /*                                                         */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);   */
+    /*                                                         */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C2, ENABLE);   */
+    /*                                                         */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+// RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3,
+    //                       ENABLE); /* 单片机与手机模块的通信用串口3*/
+
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART4, ENABLE); */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART5, ENABLE); */
+    /*                                                         */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USB, ENABLE);    */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, ENABLE);   */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_BKP, ENABLE);    */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);    */
+    /*  RCC_APB1PeriphClockCmd(RCC_APB1Periph_CEC, ENABLE);    */
+
+
+
+    /*  【AHB总线时钟】   这个较复杂 写的时候自己查询注意*/
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+
+
+}
+
+/********************************************************************
+*函数名 ：        HeadFirst
+
+*函数参数 ：      无
+
+*函数返回值 :     无
+
+*函数功能描述 ：  HeadFirst 此函数，是单片机上电时执行的一些基本的初始化函数。
+*********************************************************************/
+void  HeadFirst(void)
+{
+    Delay_init();
+    Delay_ms(100);
+
+    verison = 1.00;
+
+    RCC_Config(); //配置与程序相关的一些外设的时钟
+
+
+    LED_Config();
+
+
+
+    USART1_Config();
+    USART2_Config();
+
+//    printf("==制灵师-侯霄==\r\n授灵日期:2017年5月11日==\r\n");
+//    printf("附体魂魄小鬼编号:%.2f\r\n", verison);
+
+//    SendStringBy_USART1("OK\r\n");
+//    printf("串口2配置完毕");
+
+
+
+
+
+
+    HX711_Config();
+
+
+    GetMaopi();
+    Delay_ms(1000);
+    Delay_ms(1000);
+    GetMaopi();
+
+
+    LCD_Config();
+
+
+    LCD_Clear(BLACK);//GBLUE
+    POINT_COLOR = BLACK;
+
+    /*24号字符的大小，一个字符的宽度为320/26*/
+
+    LCD_ShowString(60, 10, 264, 24, 24, "Electronic Scale"); //显示LCD ID  11*24=
+
+    LCD_ShowString(0, 40, 123, 24, 24, "Weight(g):");//10*12=120
+    LCD_ShowString(0, 80, 209, 24, 24, "Unit Price(Y/Kg):");//17*12=204
+
+    POINT_COLOR = BLUE;
+
+    LCD_ShowString(120, 40, 123, 24, 24, "0");//称重重量默认显示0
+    LCD_ShowString(204, 80, 123, 24, 24, "0");//单价默认显示0
+
+
+
+
+
+    DISPLAY_RENCODE_TO_TFT((uint8_t *)codetest);
+
+    KeyPadConfig();
+    TIM4_Config(); //这个通用定时器4就是用来做我程序框架的时间基准！
+
+    TCP_ConnectServer();//TCP连接服务器
+    // printf("进入系统");
+
+    // IWDG_Configuration();
+}
+
+void KeyTest()
+{
+    if(KEY_Row1)
+    {
+        printf("1高电平");
+    }
+    else
+    {
+        printf("1低电平");
+    }
+    if(KEY_Row2)
+    {
+        printf("2高电平");
+    }
+    else
+    {
+        printf("2低电平");
+    }
+
+    if(KEY_Row3)
+    {
+        printf("3高电平");
+    }
+    else
+    {
+        printf("3低电平");
+    }
+
+    if(KEY_Row4)
+    {
+        printf("4高电平");
+    }
+    else
+    {
+        printf("4低电平");
+    }
+
+
+
+    if(KEY_Col1_IN)
+    {
+        printf("=========\r1高电平");
+    }
+    else
+    {
+        printf("1低电平");
+    }
+    if(KEY_Col2_IN)
+    {
+        printf("2高电平");
+    }
+    else
+    {
+        printf("2低电平");
+    }
+    if(KEY_Col3_IN)
+    {
+        printf("3高电平");
+    }
+    else
+    {
+        printf("3低电平");
+    }
+    if(KEY_Col4_IN)
+    {
+        printf("4高电平");
+    }
+    else
+    {
+        printf("4低电平");
+    }
+
+
+}
+void LedFlick()
+{
+    static uint8_t Su8_ledStep = 0;
+    static uint8_t Su8_ledFlickNum = 0;
+
+
+    if(!ledFlickFlag ) return;
+
+    switch (Su8_ledStep)
+    {
+        case 0:
+            if (DS0_TimeCnt >= 100)
+            {
+                DS0_TimeCnt = 0;
+                if (DS0_IN == 1)
+                {
+                    DS0 = 0;
+                }
+                else
+                {
+                    DS0 = 1;
+                }
+
+                Su8_ledStep = 1;
+            }
+            break;
+        case 1:
+            if (DS0_TimeCnt >= 500)
+            {
+                DS0_TimeCnt = 0;
+                if (DS0_IN == 1)
+                {
+                    DS0 = 0;
+                }
+                else
+                {
+                    DS0 = 1;
+                }
+                Su8_ledStep = 0;
+
+                if (++Su8_ledFlickNum >= 2)
+                {
+                    Su8_ledFlickNum = 0;
+                    ledFlickFlag = 0;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+
+}
+
+
+void DISPLAY_RENCODE_TO_TFT(uint8_t *qrcode_data)
+{
+    u8 i, j;
+    u16 x, y, p;
+//    u8 qrencode_buff[12];           //存放LCD ID字符串
+    EncodeData((char *)qrcode_data);
+    //LCD_Fill(10,110,15,115,BLACK);
+    //  LCD_Fill(0, 40, 240, 320, WHITE); //3.5寸分辨率是 480X320   2.8寸分辨率是 320X240
+
+    LCD_Fill(10, 200, 310, 470, WHITE);
+    //   sprintf((char*)qrencode_buff, "size:%d",
+    //         m_nSymbleSize); //将LCD ID打印到lcd_id数组。
+//    LCD_ShowString(10, 40, 200, 16, 16, qrencode_buff); //显示LCD ID
+    if(m_nSymbleSize * 2 > 240)
+    {
+        LCD_ShowString(10, 60, 200, 16, 16,
+                       (u8 *)"The QR Code is too large!"); //太大显示不下
+        return;
+    }
+    for(i = 0; i < 10; i++)
+    {
+        if((m_nSymbleSize * i * 2) > 240) break;
+    }
+    p = (i - 1) * 2; //点大小
+    x = (320 - m_nSymbleSize * p) / 2;
+    y = QRCODE_Y;
+    //  sprintf((char*)qrencode_buff, "piont:%d", p); //将LCD ID打印到lcd_id数组。
+//  LCD_ShowString(10, 60, 200, 16, 16, qrencode_buff);
+    //  LCD_ShowString(20, 240, 200, 16, 16, qrencode_buff);
+
+    for(i = 0; i < m_nSymbleSize; i++)
+    {
+        for(j = 0; j < m_nSymbleSize; j++)
+        {
+            //USART1_SendData(m_byModuleData[j][i]);
+            if(m_byModuleData[i][j] == 1)
+                LCD_Fill(x + p * i, y + p * j, x + p * (i + 1) - 1, y + p * (j + 1) - 1, BLACK);
+
+        }
+
+    }
+}
+
+
+
+
+
+/************************************************
+*函数名 :       KeyPadScan
+
+*函数参数 :      无
+
+*函数返回值 :     无
+
+*函数功能描述 :
+
+* 4行4列   行平时是高电平 列平时也是高电平
+
+  当依次给列输出低电平时候，如果某个行的电平变为低电平，则说明按键按下
+
+  按键去抖 20ms 即可     20/2.5=8
+*************************************************/
+
+void KeyPadScan()
+{
+    static uchar step = 0, keyPadLock = 0;
+
+    switch(step)
+    {
+        case 0:
+            switch(keyPadRowScan)
+            {
+                case 0: //赋值第一列 进行扫描
+                    KEY_Col1 = 0;
+                    KEY_Col2 = 1;
+                    KEY_Col3 = 1;
+                    KEY_Col4 = 1;
+                    break;
+                case 1://赋值第二列 进行扫描
+                    KEY_Col1 = 1;
+                    KEY_Col2 = 0;
+                    KEY_Col3 = 1;
+                    KEY_Col4 = 1;
+                    break;
+                case 2://赋值第三列 进行扫描
+                    KEY_Col1 = 1;
+                    KEY_Col2 = 1;
+                    KEY_Col3 = 0;
+                    KEY_Col4 = 1;
+                    break;
+                case 3://赋值第四列 进行扫描
+                    KEY_Col1 = 1;
+                    KEY_Col2 = 1;
+                    KEY_Col3 = 1;
+                    KEY_Col4 = 0;
+                    break;
+                default:
+                    break;
+            }
+            step = 1;
+            break;
+        case 1:
+            if(KEY_Row1 == 1 && KEY_Row2 == 1 && KEY_Row3 == 1 &&
+               KEY_Row4 == 1)//没有按键被按下
+            {
+                keyPadRowScan++;
+                if(keyPadRowScan >= 4)
+                {
+                    keyPadRowScan = 0;
+                }
+                step = 0;
+                keyPadCnt = 0;
+                keyPadLock = 0;
+            }
+            else if(keyPadLock == 0)//有按键被按下
+            {
+                keyPadCnt++;
+                if(keyPadCnt >= 5) //按键消抖  2.5X8=20ms
+                {
+                    keyPadLock = 1;
+
+                    if(KEY_Row1 == 0) //第一行被监测到低电平
+                    {
+                        switch(keyPadRowScan)//当前扫描第几列
+                        {
+                            case 0:
+                                keyTouch = 1;
+                                break;
+                            case 1:
+                                keyTouch = 2;
+                                break;
+                            case 2:
+                                keyTouch = 3;
+                                break;
+                            case 3:
+                                keyTouch = 10;
+                                break;
+                        }
+                    }
+                    else if(KEY_Row2 == 0) //第二行被监测到低电平
+                    {
+                        switch(keyPadRowScan)//当前扫描第几列
+                        {
+                            case 0:
+                                keyTouch = 4;
+                                break;
+                            case 1:
+                                keyTouch = 5;
+                                break;
+                            case 2:
+                                keyTouch = 6;
+                                break;
+                            case 3:
+                                keyTouch = 11;
+                                break;
+                        }
+                    }
+                    else if(KEY_Row3 == 0) //第三行被监测到低电平
+                    {
+                        switch(keyPadRowScan)//当前扫描第几列
+                        {
+                            case 0:
+                                keyTouch = 7;
+                                break;
+                            case 1:
+                                keyTouch = 8;
+                                break;
+                            case 2:
+                                keyTouch = 9;
+                                break;
+                            case 3:
+                                keyTouch = 12;
+                                break;
+                        }
+                    }
+                    else if(KEY_Row4 == 0) //第四行被监测到低电平
+                    {
+                        switch(keyPadRowScan)//当前扫描第几列
+                        {
+                            case 0:
+                                keyTouch = 14;
+                                break;
+                            case 1:
+                                keyTouch = 16;
+                                break;
+                            case 2:
+                                keyTouch = 15;
+                                break;
+                            case 3:
+                                keyTouch = 13;
+                                break;
+                        }
+                    }
+                }
+            }
+            break;
+        default:
+
+            break;
+    }
+}
+
+void KeyPadService(void)
+{
+    static uchar cursorIndex = 0;
+    uchar num = 0;
+
+    if(!keyTouch )// ||
+    {
+        return;
+    }
+
+    if((keyTouch >= 1 && keyTouch <= 9) || keyTouch == 14 || keyTouch == 16)
+    {
+        if(cursorIndex < 7 &&
+           tradeLock == 0) //交易没有关闭  结算按键，交易关闭后，不能再输入单价数额
+        {
+            cursorIndex++;
+            //printf("按键%d\r\n",keyTouch);
+            if(keyTouch >= 1 && keyTouch <= 9)
+            {
+                num = keyTouch;
+                LCD_ShowNum(204 + 12 * (cursorIndex - 1), 80, num, 1 , 24);
+                unitPrice[cursorIndex - 1] = num + 48;
+            }
+            else if(keyTouch == 16)
+            {
+                num = 0;
+                LCD_ShowNum(204 + 12 * (cursorIndex - 1), 80, 0, 1 , 24);
+                unitPrice[cursorIndex - 1] = num + 48;
+            }
+            else
+            {
+                if(cursorIndex > 1)
+                {
+                    //防止2个小数点的程序没有添加，后期有空优化实现
+                    LCD_ShowString(204 + 12 * (cursorIndex - 1), 80, 24, 24, 24, ".");
+                    unitPrice[cursorIndex - 1] = 46;
+                }
+                else
+                {
+                    cursorIndex = 0;
+                }
+            }
+        }
+        keyTouch = 0;
+    }
+
+    switch(keyTouch)
+    {
+        case 10:
+         //  printf("A:去皮\r\n");
+            GetMaopi();
+            keyTouch = 0;
+            break;
+        case 11:
+        //    printf("B:重新\r\n");
+            memset(unitPrice, 0, 8);//填充价格数组为空
+            LCD_ShowString(120, 40, 123, 24, 24, "0");//称重重量默认显示0
+            LCD_Fill(132, 40, 350, 64, BLACK);
+
+            LCD_ShowString(204, 80, 123, 24, 24, "0");//单价默认显示0
+            LCD_Fill(216, 80, 350, 104, BLACK);
+
+            LCD_Fill(0, 120, 400, 144, BLACK); //总额显示栏清空
+            cursorIndex = 0;//光标复原
+
+            keyTouch = 0;
+            tradeLock = 0;//交易锁打开
+            break;
+        case 12:
+        //    printf("C:删除\r\n");
+            if(cursorIndex > 0 && tradeLock == 0)//交易没有关闭
+            {
+                LCD_Fill(204 + 12 * (cursorIndex - 1), 80, 216 + 12 * (cursorIndex - 1), 104,
+                         BLACK);
+                cursorIndex--;
+            }
+            keyTouch = 0;
+            break;
+        case 13:
+        //    printf("D:结算\r\n");
+
+            sprintf(totalMoney, "%.2f", atof(unitPrice) * (Weight_Shiwu / 1000.0) - 0.005);
+
+            tradeLock =
+                1; //本次交易结束，正处于显示页面，不能再改动修改数据，重新开始交易请按B键
+
+            keyTouch = 0;
+
+            POINT_COLOR = BLACK;
+            LCD_ShowString(0, 120, 209, 24, 24, "Total(yuan):");//12*12=144
+
+            POINT_COLOR = RED;
+            LCD_ShowString(144, 120, 209, 24, 24, (u8*)totalMoney);//17*12=204
+            POINT_COLOR = BLUE;
+
+
+            gprsService = 1;
+            sprintf(gprsSendBuff, "get?jiage=%s&name=HouXiao\r\n", totalMoney);
+            ledFlickFlag = 1;
+
+
+            break;
+
+        case 15:
+            //  printf("#\r\n");
+
+
+
+
+
+            keyTouch = 0;
+            break;
+
+    }
+}
+
+
+
+
+void  GetWeightService(void)
+{
+    static uchar lastLength = 0, newLength = 0;
+
+    if(getWeightService)
+    {
+        if(tradeLock == 0)
+        {
+            GetWeight();
+
+            newLength = NumLength(Weight_Shiwu);
+
+
+            if(lastLength !=
+               newLength)//如上是解决数据从3位 或2位 等变为1位数据时候的显示问题的
+            {
+                LCD_Fill(120, 40, 180, 64, BLACK);
+                lastLength = newLength;
+            }
+
+            LCD_ShowNum(120, 40, Weight_Shiwu, newLength ,
+                        24); //NumLength(Weight_Shiwu)计算此数据的数据位数
+
+            //    printf("%d ",Weight_Shiwu);
+        }
+        getWeightService = 0;
+    }
+
+}
+
+
+void  GPRS_Service()
+{
+    static uchar step = 0;
+
+    uint8_t   temp = 0;
+    if(gprsService == 0 && heartbeatService == 0) return;
+
+    switch(step)
+    {
+        case 0:
+            temp = Send_AT_Cmd("AT+CIPSEND\r\n", ">", 150);
+            if (temp == 2) //如果发送指令后?返回的数据有OK表示成功?此时temp=2
+            {
+                if(gprsService)//有效通信
+                {
+                    printf(gprsSendBuff);
+                } else if(heartbeatService)//有效通信的时候 就不要发心跳了  心跳6s一次
+                {
+                    heartbeatService = 0;
+                   
+									USART_ClearFlag(USART2, USART_FLAG_TC);
+                  USART_SendData(USART2, 0x00);
+                  while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+                }
+
+                USART_ClearFlag(USART2, USART_FLAG_TC);
+                USART_SendData(USART2, 0x1A);
+                while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+
+                gprsService = 0;
+            }
+            if (temp == 3) //连续三次都错误
+            {
+
+                USART_ClearFlag(USART2, USART_FLAG_TC);
+                USART_SendData(USART2, 0x1B);
+                while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+
+                SendStringBy_USART1("GPRS Send Err\r\n");
+                gprsService = 0;
+            }
+            break;
+
+        case 1:
+
+
+            break;
+
+    }
+
+
+
+}
+

@@ -1,0 +1,300 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+    Version="10.0"
+    VendorName="SlickEdit"
+    WorkingDir=".">
+    <Config
+        Name="Debug"
+        Type="gnuc"
+        DebugCallbackName="gdb"
+        Version="1"
+        OutputFile="%bdtest.dll"
+        CompilerConfigName="Latest Version">
+        <Menu>
+            <Target
+                Name="Compile"
+                MenuCaption="&amp;Compile"
+                Dialog="_gnuc_options_form Compile"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                OutputExts="*.o"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec CmdLine='gcc -ansi -c %xup  %defd -g -o "%bd%n%oe" %i "%f"'/>
+            </Target>
+            <Target
+                Name="Link"
+                MenuCaption="&amp;Link"
+                ShowOnMenu="Never"
+                Dialog="_gnuc_options_form Link"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec CmdLine='gcc -ansi %xup -g -o "%o" %f %libs -shared -fPIC'/>
+            </Target>
+            <Target
+                Name="Build"
+                MenuCaption="&amp;Build"
+                Dialog="_gnuc_options_form Compile"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t build'/>
+            </Target>
+            <Target
+                Name="Rebuild"
+                MenuCaption="&amp;Rebuild"
+                Dialog="_gnuc_options_form Compile"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t rebuild'/>
+            </Target>
+            <Target
+                Name="Debug"
+                MenuCaption="&amp;Debug"
+                Dialog="_gnuc_options_form Run/Debug"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveNone"
+                RunFromDir="%rw">
+                <Exec CmdLine=""/>
+            </Target>
+            <Target
+                Name="Execute"
+                MenuCaption="E&amp;xecute"
+                Dialog="_gnuc_options_form Run/Debug"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine=""/>
+            </Target>
+            <Target
+                Name="dash"
+                MenuCaption="-"
+                Deletable="0">
+                <Exec/>
+            </Target>
+            <Target
+                Name="GNU C Options"
+                MenuCaption="GNU C &amp;Options..."
+                ShowOnMenu="HideIfNoCmdLine"
+                Deletable="0"
+                SaveOption="SaveNone">
+                <Exec
+                    CmdLine="gnucoptions"
+                    Type="Slick-C"/>
+            </Target>
+        </Menu>
+        <List Name="GNUC Options">
+            <Item
+                Name="LinkerOutputType"
+                Value="SharedLibrary"/>
+        </List>
+        <Includes>
+            <Include Dir="CMSIS"/>
+            <Include Dir="Libraries"/>
+        </Includes>
+    </Config>
+    <Config
+        Name="Release"
+        Type="gnuc"
+        DebugCallbackName="gdb"
+        Version="1"
+        OutputFile="%bdtest.dll"
+        CompilerConfigName="Latest Version">
+        <Menu>
+            <Target
+                Name="Compile"
+                MenuCaption="&amp;Compile"
+                Dialog="_gnuc_options_form Compile"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                OutputExts="*.o"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec CmdLine='gcc -ansi -c %xup %defd -o "%bd%n%oe" %i "%f"'/>
+            </Target>
+            <Target
+                Name="Link"
+                MenuCaption="&amp;Link"
+                ShowOnMenu="Never"
+                Dialog="_gnuc_options_form Link"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec CmdLine='gcc -ansi %xup -o "%o" %f %libs -shared -fPIC'/>
+            </Target>
+            <Target
+                Name="Build"
+                MenuCaption="&amp;Build"
+                Dialog="_gnuc_options_form Compile"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t build'/>
+            </Target>
+            <Target
+                Name="Rebuild"
+                MenuCaption="&amp;Rebuild"
+                Dialog="_gnuc_options_form Compile"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t rebuild'/>
+            </Target>
+            <Target
+                Name="Debug"
+                MenuCaption="&amp;Debug"
+                Dialog="_gnuc_options_form Run/Debug"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveNone"
+                RunFromDir="%rw">
+                <Exec CmdLine=""/>
+            </Target>
+            <Target
+                Name="Execute"
+                MenuCaption="E&amp;xecute"
+                Dialog="_gnuc_options_form Run/Debug"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                Deletable="0"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine=""/>
+            </Target>
+            <Target
+                Name="dash"
+                MenuCaption="-"
+                Deletable="0">
+                <Exec/>
+            </Target>
+            <Target
+                Name="GNU C Options"
+                MenuCaption="GNU C &amp;Options..."
+                ShowOnMenu="HideIfNoCmdLine"
+                Deletable="0"
+                SaveOption="SaveNone">
+                <Exec
+                    CmdLine="gnucoptions"
+                    Type="Slick-C"/>
+            </Target>
+        </Menu>
+        <List Name="GNUC Options">
+            <Item
+                Name="LinkerOutputType"
+                Value="SharedLibrary"/>
+        </List>
+        <Includes>
+            <Include Dir="CMSIS"/>
+            <Include Dir="Libraries"/>
+        </Includes>
+    </Config>
+    <Files>
+        <Folder
+            Name="CMSIS"
+            Filters="">
+            <F N="../CMSIS/CM3/CoreSupport/core_cm3.c"/>
+            <F N="../CMSIS/CM3/CoreSupport/core_cm3.h"/>
+            <F N="../CMSIS/CM3/DeviceSupport/ST/STM32F10x/stm32f10x.h"/>
+            <F N="../CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c"/>
+            <F N="../CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.h"/>
+        </Folder>
+        <Folder
+            Name="Libraries"
+            Filters="">
+            <F N="../Libraries/src/misc.c"/>
+            <F N="../Libraries/inc/misc.h"/>
+            <F N="../Libraries/src/stm32f10x_adc.c"/>
+            <F N="../Libraries/inc/stm32f10x_adc.h"/>
+            <F N="../Libraries/src/stm32f10x_bkp.c"/>
+            <F N="../Libraries/inc/stm32f10x_bkp.h"/>
+            <F N="../Libraries/src/stm32f10x_can.c"/>
+            <F N="../Libraries/inc/stm32f10x_can.h"/>
+            <F N="../Libraries/src/stm32f10x_cec.c"/>
+            <F N="../Libraries/inc/stm32f10x_cec.h"/>
+            <F N="../Libraries/src/stm32f10x_crc.c"/>
+            <F N="../Libraries/inc/stm32f10x_crc.h"/>
+            <F N="../Libraries/src/stm32f10x_dac.c"/>
+            <F N="../Libraries/inc/stm32f10x_dac.h"/>
+            <F N="../Libraries/src/stm32f10x_dbgmcu.c"/>
+            <F N="../Libraries/inc/stm32f10x_dbgmcu.h"/>
+            <F N="../Libraries/src/stm32f10x_dma.c"/>
+            <F N="../Libraries/inc/stm32f10x_dma.h"/>
+            <F N="../Libraries/src/stm32f10x_exti.c"/>
+            <F N="../Libraries/inc/stm32f10x_exti.h"/>
+            <F N="../Libraries/src/stm32f10x_flash.c"/>
+            <F N="../Libraries/inc/stm32f10x_flash.h"/>
+            <F N="../Libraries/src/stm32f10x_fsmc.c"/>
+            <F N="../Libraries/inc/stm32f10x_fsmc.h"/>
+            <F N="../Libraries/src/stm32f10x_gpio.c"/>
+            <F N="../Libraries/inc/stm32f10x_gpio.h"/>
+            <F N="../Libraries/src/stm32f10x_i2c.c"/>
+            <F N="../Libraries/inc/stm32f10x_i2c.h"/>
+            <F N="../Libraries/src/stm32f10x_iwdg.c"/>
+            <F N="../Libraries/inc/stm32f10x_iwdg.h"/>
+            <F N="../Libraries/src/stm32f10x_pwr.c"/>
+            <F N="../Libraries/inc/stm32f10x_pwr.h"/>
+            <F N="../Libraries/src/stm32f10x_rcc.c"/>
+            <F N="../Libraries/inc/stm32f10x_rcc.h"/>
+            <F N="../Libraries/src/stm32f10x_rtc.c"/>
+            <F N="../Libraries/inc/stm32f10x_rtc.h"/>
+            <F N="../Libraries/src/stm32f10x_sdio.c"/>
+            <F N="../Libraries/inc/stm32f10x_sdio.h"/>
+            <F N="../Libraries/src/stm32f10x_spi.c"/>
+            <F N="../Libraries/inc/stm32f10x_spi.h"/>
+            <F N="../Libraries/src/stm32f10x_tim.c"/>
+            <F N="../Libraries/inc/stm32f10x_tim.h"/>
+            <F N="../Libraries/src/stm32f10x_usart.c"/>
+            <F N="../Libraries/inc/stm32f10x_usart.h"/>
+            <F N="../Libraries/src/stm32f10x_wwdg.c"/>
+            <F N="../Libraries/inc/stm32f10x_wwdg.h"/>
+        </Folder>
+        <Folder
+            Name="Startup"
+            Filters=""/>
+        <Folder
+            Name="USER"
+            Filters="">
+            <F N="../USER/adc.c"/>
+            <F N="../USER/adc.h"/>
+            <F N="../USER/ads1230.c"/>
+            <F N="../USER/ads1230.h"/>
+            <F N="../USER/delay.c"/>
+            <F N="../USER/delay.h"/>
+            <F N="../USER/gsm.c"/>
+            <F N="../USER/gsm.h"/>
+            <F N="../USER/iic.c"/>
+            <F N="../USER/iic.h"/>
+            <F N="../USER/includes.h"/>
+            <F N="../USER/main.c"/>
+            <F N="../USER/pcf8563.c"/>
+            <F N="../USER/pcf8563.H"/>
+            <F N="../USER/peripheral.c"/>
+            <F N="../USER/peripheral.h"/>
+            <F N="../USER/stm32f10x_conf.h"/>
+            <F N="../USER/stm32f10x_it.c"/>
+            <F N="../USER/stm32f10x_it.h"/>
+            <F N="../USER/stmflash.c"/>
+            <F N="../USER/stmflash.h"/>
+            <F N="../USER/sys.h"/>
+            <F N="../USER/tm1638.C"/>
+            <F N="../USER/tm1638.h"/>
+            <F N="../USER/tools.c"/>
+            <F N="../USER/tools.h"/>
+            <F N="../USER/user.c"/>
+            <F N="../USER/user.h"/>
+        </Folder>
+    </Files>
+</Project>
